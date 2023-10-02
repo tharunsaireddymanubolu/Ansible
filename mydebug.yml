@@ -1,0 +1,12 @@
+---
+- hosts: 172.31.37.214
+  become: yes
+  tasks:
+  - name: Execute Linux Command
+    command: ls
+    register: Result
+    tags: Linux command
+  - name: Check Result
+    debug:
+      msg: "{{Result}}"
+    tags: MyResult

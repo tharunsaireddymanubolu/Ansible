@@ -1,0 +1,8 @@
+[myserver]
+172.31.37.214
+
+[myappserver]
+172.31.37.4
+
+[myDBserver]
+172.31.37.21

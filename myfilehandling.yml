@@ -1,0 +1,28 @@
+---
+- hosts: 172.31.37.214
+  become: yes
+  tasks:
+  - name: create file
+    file:
+      path: /home/ubuntu/testfile
+      state: touch
+  - include_tasks: myplaybook.yml
+  - name: Copy File From Ansible Master to Node
+    copy:
+      src: mystaticfile
+      dest: /home/ubuntu/mystaticfile
+  - name: copy dynamic file from master to Node
+    template:
+      src: index.j2
+      dest: /var/www/html/index.html
+    notify: restartserver
+  - name: download Remote File
+    get_url:
+      url: https://www.google.com/search?q=Jadeja&rlz=1C1RXQR_enIN1028IN1028&sxsrf=AJOqlzXl6KdgNsDQ989c2b-8FDWGCYyE2A:1676830615248&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiwka7pmKL9AhVF83MBHTXYA1wQ_AUoAnoECAEQBA&biw=1536&bih=722&dpr=1.25#imgrc=iJDxuYhX2qQq2M
+      dest: /home/ubuntu/jadeja.png
+      force_basic_auth: yes
+  handlers:
+  - name: restartserver
+    systemd:
+      name: apache2
+      state: restarted
